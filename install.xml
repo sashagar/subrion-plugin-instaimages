@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?><?xml version="1.0" encoding="utf-8"?>
+<plugin name="instaimages">
+    <title>Instaimage</title>
+    <summary>Inatagram images  plugin</summary>
+    <author>sasha_gar</author>
+    <contributor>sasha_gar</contributor>
+    <version>1.0.0</version>
+    <date>2016-28-05</date>
+    <category>Instagram</category>
+    <compatibility>4.0</compatibility>
+
+    <!--<actions>-->
+        <!--<action name="instaimages" url="instagram/" icon="list" pages="instaimages:add,instaimages:edit,instaimages:delete">List</action>-->
+        <!--<action name="insftaimages_add" url="instagram/add/" icon="plus" pages="instaimages:read,instaimages:edit">Add Instagram user</action>-->
+    <!--</actions>-->
+
+    <actions>
+        <action name="instaimages_view" url="instaimages/" icon="list" pages="instaimages:add,instaimages:edit">List</action>
+        <action name="instaimages_add"  url="instaimages/add/" icon="plus" pages="instaimages:read,instaimages:edit">Add Location</action>
+    </actions>
+
+    <permissions>
+        <object id="instaimages" access="1">View listings</object>
+        <object id="instaimages" action="add" access="0">Add Instagram user</object>
+        <object id="instaimages" action="edit" access="0">Edit Instagram user</object>
+        <object id="instaimages" action="delete" access="0">Delete Instagram user</object>
+    </permissions>
+
+    <configgroup name="instaimages">Instaimages settings</configgroup>
+
+    <config group="instaimages" name="instaimages_des" type="divider" description="Settings for import images">User Id</config>
+    <config group="instaimages" name="instaimages_user_id" type="text" description="Instagram user id from API ">User Id</config>
+    <config group="instaimages" name="instaimages_secret_id" type="text" description="Instagram secret id ">Secret id</config>
+    <config group="instaimages" name="instaimages_quantity" type="text"  description="Quantity">10</config>
+    <install>
+        <sql>
+            <![CDATA[
+CREATE TABLE IF NOT EXISTS `{prefix}insta_settings` (
+	`id` mediumint(7) unsigned NOT NULL auto_increment,
+	`user_id` text,
+	`secret_id` text,
+	`quantity` text,
+	PRIMARY KEY  (`id`),
+	KEY `LANGUAGE` (`secret_id`)
+) {mysql_version};
+]]>
+        </sql>
+     <sql>
+         <![CDATA[
+CREATE TABLE IF NOT EXISTS `{prefix}instagram_users_list` (
+	`id` mediumint(7) unsigned NOT NULL auto_increment,
+	`user_name` text,
+	'urls' text,
+	PRIMARY KEY  (`id`),
+	KEY `LANGUAGE` (`user_name`)
+) {mysql_version};
+]]>
+
+     </sql>
+    </install>
+
+    <uninstall>
+        <sql>
+            <![CDATA[
+DROP TABLE IF EXISTS `{prefix}insta_settings`, `{prefix}instagram_users_list`;
+			]]>
+        </sql>
+
+    </uninstall>
+</plugin>
